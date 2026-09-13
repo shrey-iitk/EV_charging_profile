@@ -115,8 +115,15 @@ def predict_from_soc_range(
         SOC_series = predict_soc(time_series,model,t_min,t_max,soc_mean,soc_std)
         return time_series, SOC_series
 
-    (model,t_min,t_max,soc_mean,soc_std,Q_N,V_N) = load_pinn_model(
-        os.path.join(soc_tools_path))
+
+    @st.cache_resource
+    def load_pinn_model_cached(model_path):
+        return load_pinn_model(model_path)
+        
+    pinn_model, t_min, t_max, soc_mean, soc_std, Q_N, V_N = \
+    load_pinn_model_cached(soc_tools_path)
+    # (model,t_min,t_max,soc_mean,soc_std,Q_N,V_N) = load_pinn_model(
+    #     os.path.join(soc_tools_path))
     # --------------------------------------------------------
     # Generate SOC series
     # --------------------------------------------------------
@@ -137,12 +144,19 @@ def predict_from_soc_range(
     #     model_path,
     #     custom_objects={'mse': tf.keras.losses.MeanSquaredError()}
     #     )
-
-    model = keras_load_model(
+    @st.cache_resource
+    def load_lstm_model(model_path):
+        return keras_load_model(
         model_path,
-        custom_objects={'mse': MeanSquaredError()},
+        custom_objects={"mse": MeanSquaredError()},
         compile=False
-    )
+        )
+    lstm_model = load_lstm_model(model_path)
+    # model = keras_load_model(
+    #     model_path,
+    #     custom_objects={'mse': MeanSquaredError()},
+    #     compile=False
+    # )
     # model = load_model("model.h5", compile=False)
 
     # Extract 'SOC' column and reshape it to match the structure

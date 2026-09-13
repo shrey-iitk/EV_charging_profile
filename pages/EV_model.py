@@ -18,6 +18,13 @@ st.set_page_config(
 st.title("EV Charging Profile Prediction")
 
 # --------------------------------------------------
+# Cached prediction
+# --------------------------------------------------
+@st.cache_data(show_spinner=False)
+def cached_prediction(soc_start, soc_end):
+    return predict_from_soc_range(soc_start, soc_end)
+
+# --------------------------------------------------
 # Sidebar inputs
 # --------------------------------------------------
 st.sidebar.header("SOC Input")
@@ -50,7 +57,12 @@ if run_button:
 
     else:
         with st.spinner("Running SOC prediction..."):
-            time, P, Q, SOC = predict_from_soc_range(soc_start, soc_end)
+            
+            time, P, Q, SOC = cached_prediction(
+                soc_start,
+                soc_end
+            )
+            # time, P, Q, SOC = predict_from_soc_range(soc_start, soc_end)
 
         # Create DataFrame
         df = pd.DataFrame({

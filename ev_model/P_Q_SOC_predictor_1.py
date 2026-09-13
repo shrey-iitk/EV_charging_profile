@@ -127,12 +127,16 @@ def predict_from_soc_range(
     time = arithmetic_sequence(a1, d, n)
     
     tf.keras.backend.clear_session()
-
-    model = load_model(
-        model_path,
-        custom_objects={'mse': MeanSquaredError()},
-        compile=False
+    model = tf.keras.models.load_model(
+    "LSTM_model_text_7_new.h5",
+    custom_objects={'mse': tf.keras.losses.MeanSquaredError()}
     )
+
+    # model = load_model(
+    #     model_path,
+    #     custom_objects={'mse': MeanSquaredError()},
+    #     compile=False
+    # )
     # model = load_model("model.h5", compile=False)
 
     # Extract 'SOC' column and reshape it to match the structure

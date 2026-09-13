@@ -1,10 +1,15 @@
 import numpy as np
 import pickle
 import os
-from datetime import datetime, timedelta
-from tensorflow.keras.models import load_model
-from tensorflow.keras.losses import MeanSquaredError
+
+import torch
+import torch.nn as nn
+
 import tensorflow as tf
+from tensorflow.keras.models import load_model as keras_load_model
+from tensorflow.keras.losses import MeanSquaredError
+
+from scipy.optimize import brentq
 
 
 def predict_from_soc_range(
@@ -18,6 +23,7 @@ def predict_from_soc_range(
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     model_path     = os.path.join(base_dir, model_path)
+    soc_tools_path = os.path.join(base_dir, soc_tools_path)
 
     # Folder where pinn_vs_nn_comparison.py saved everything
 
@@ -38,7 +44,7 @@ def predict_from_soc_range(
     # ===========================================================
     # 2. Load saved .pkl model
     # ============================================================
-    def load_model(filename):
+    def load_pinn_model(filename):
         with open(filename, "rb") as f:
             d = pickle.load(f)
         # Rebuild the network with the SAME architecture it was trained with
@@ -109,7 +115,7 @@ def predict_from_soc_range(
         SOC_series = predict_soc(time_series,model,t_min,t_max,soc_mean,soc_std)
         return time_series, SOC_series
 
-    (model,t_min,t_max,soc_mean,soc_std,Q_N,V_N) = load_model(
+    (model,t_min,t_max,soc_mean,soc_std,Q_N,V_N) = load_pinn_model(
         os.path.join(soc_tools_path))
     # --------------------------------------------------------
     # Generate SOC series
@@ -127,16 +133,16 @@ def predict_from_soc_range(
     time = arithmetic_sequence(a1, d, n)
     
     tf.keras.backend.clear_session()
-    model = tf.keras.models.load_model(
-    "LSTM_model_text_7_new.h5",
-    custom_objects={'mse': tf.keras.losses.MeanSquaredError()}
-    )
-
-    # model = load_model(
+    # model = tf.keras.models.load_model(
     #     model_path,
-    #     custom_objects={'mse': MeanSquaredError()},
-    #     compile=False
-    # )
+    #     custom_objects={'mse': tf.keras.losses.MeanSquaredError()}
+    #     )
+
+    model = keras_load_model(
+        model_path,
+        custom_objects={'mse': MeanSquaredError()},
+        compile=False
+    )
     # model = load_model("model.h5", compile=False)
 
     # Extract 'SOC' column and reshape it to match the structure

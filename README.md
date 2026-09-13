@@ -667,5 +667,8 @@ Add the project's actual license here before public distribution.
 
 ## Authors / Contributors
 
-Add the project authors, affiliation, and contact details here.
+Shrey Verma
+
+PhD Researcher, Power Systems & EV Grid Intelligence
+IIT Kanpur
 

@@ -171,7 +171,11 @@ https://ev-charging-dt.streamlit.app/
 
 ## Authors
 
-Add project authors, affiliation, and contact details here.
+Shrey Verma
+
+PhD Researcher, Power Systems & EV Grid Intelligence
+IIT Kanpur
+>Specialized in physics-informed AI for cyber-physical energy systems.
 
 ## License
 

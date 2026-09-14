@@ -4,6 +4,8 @@ An interactive **Streamlit-based platform for EV charging, battery SOC modelling
 
 **Live App:** https://ev-charging-dt.streamlit.app/
 
+By **Shrey Verma**
+
 ## Overview
 
 The platform connects EV-level modelling with fleet and grid-level analysis:

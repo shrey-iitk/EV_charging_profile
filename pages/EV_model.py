@@ -74,7 +74,13 @@ if run_button:
 
         # 🔑 STORE RESULT IN SESSION STATE
         st.session_state["prediction_df"] = df
-        st.session_state["start_time"] = datetime.now().astimezone()
+        # st.session_state["start_time"] = datetime.now().astimezone()
+        def get_local_time():
+            user_tz = st.context.timezone
+            now_utc = datetime.now(timezone.utc)
+            return now_utc.astimezone(pytz.timezone(user_tz))
+        start_time = get_local_time()
+        st.session_state["start_time"] = start_time
         st.session_state["soc_range"] = (soc_start, soc_end)
 
 # --------------------------------------------------

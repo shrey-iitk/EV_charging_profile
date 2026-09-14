@@ -105,7 +105,7 @@ ev_charging_profile/
 ├── scenario/
 │   └── combine.py
 ├── user_profiles/
-│   └── EV charging pattern data
+│   └── EV user habbit of charging data
 ├── data/
 │   └── Different charging profiles data
 ├── requirements.txt

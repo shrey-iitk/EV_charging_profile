@@ -40,7 +40,7 @@ It is designed for EV penetration studies, charging-demand analysis, and scenari
 - Predicts:
   - Active power (**P**)
   - Reactive power (**Q**)
-- Uses the saved Keras model `LSTM_model_text_7_new.h5`.
+- Uses the saved Keras model `LSTM_model.h5`.
 
 ### 👤 EV User Behaviour
 The **EV Charging User Habit** module:
@@ -96,18 +96,18 @@ Generated EV demand can be incorporated into distribution-network studies to exa
 ev_charging_profile/
 ├── pages/
 │   ├── EV_model.py
-│   ├── User_habit_2.py
-│   └── <other pages>
+│   ├── User_habit.py
+│   └── User_habit_1.py
 ├── ev_model/
-│   ├── P_Q_SOC_predictor_1.py
+│   ├── P_Q_SOC_predictor.py
 │   ├── pinn_soc_model.pkl
-│   └── LSTM_model_text_7_new.h5
+│   └── LSTM_model.h5
 ├── scenario/
-│   └── combine_2.py
+│   └── combine.py
 ├── user_profiles/
-│   └── *.csv
+│   └── EV charging pattern data
 ├── data/
-│   └── prediction_SOC*.csv
+│   └── Different charging profiles data
 ├── requirements.txt
 └── README.md
 ```

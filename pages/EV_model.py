@@ -74,7 +74,7 @@ if run_button:
 
         # 🔑 STORE RESULT IN SESSION STATE
         st.session_state["prediction_df"] = df
-        st.session_state["start_time"] = datetime.now()
+        st.session_state["start_time"] = datetime.now().astimezone()
         st.session_state["soc_range"] = (soc_start, soc_end)
 
 # --------------------------------------------------
